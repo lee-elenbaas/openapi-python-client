@@ -223,15 +223,22 @@ def parameter_from_reference(
     See Also:
         - https://swagger.io/docs/specification/using-ref/
     """
-    if isinstance(param, Parameter):
-        return param
+    param = _resolve_reference(param, parameters)
+    param.param_schema = _resolve_reference(param.param_schema, Schemas)
 
+    return param
+
+def _resolve_reference(param: oai.Reference, reference_repo):
+    if not isinstance(param, ReferencePath):
+        return param
+    
     ref_path = parse_reference_path(param.ref)
 
     if isinstance(ref_path, ParseError):
         return ParameterError(detail=ref_path.detail)
 
-    _resolved_parameter_class = parameters.classes_by_reference.get(ref_path, None)
+    _resolved_parameter_class = reference_repo.classes_by_reference.get(ref_path, None)
     if _resolved_parameter_class is None:
         return ParameterError(detail=f"Reference `{ref_path}` not found.")
+    
     return _resolved_parameter_class
