@@ -229,7 +229,7 @@ def parameter_from_reference(
     return param
 
 def _resolve_reference(param: oai.Reference, reference_repo):
-    if not isinstance(param, ReferencePath):
+    if not isinstance(param, oai.Reference):
         return param
     
     ref_path = parse_reference_path(param.ref)

@@ -358,7 +358,7 @@ class Endpoint:
 
         for param in data.parameters:
             # Obtain the parameter from the reference or just the parameter itself
-            param_or_error = parameter_from_reference(param=param, parameters=parameters)
+            param_or_error = parameter_from_reference(param=param, parameters=parameters, schemas=schemas)
             if isinstance(param_or_error, ParseError):
                 return param_or_error, schemas, parameters
             param = param_or_error
