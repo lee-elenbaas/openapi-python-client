@@ -1,9 +1,9 @@
 import pytest
 
 from openapi_python_client.parser.errors import ParameterError
-from openapi_python_client.parser.properties import Class, Parameters
+from openapi_python_client.parser.properties import Class, Parameters, Schemas
 from openapi_python_client.parser.properties.schemas import parameter_from_reference
-from openapi_python_client.schema import Parameter, Reference
+from openapi_python_client.schema import Parameter, Reference, Schema
 
 MODULE_NAME = "openapi_python_client.parser.properties.schemas"
 
@@ -83,9 +83,11 @@ class TestParameterFromData:
 
 class TestParameterFromReference:
     def test_returns_parameter_if_parameter_provided(self):
+        schema = Schema.construct()
         param = Parameter.construct()
         params = Parameters()
-        param_or_error = parameter_from_reference(param=param, parameters=params)
+        schemas = Schemas()
+        param_or_error = parameter_from_reference(param=param, parameters=params, schemas=schemas)
         assert param_or_error == param
 
     def test_errors_out_if_reference_not_in_parameters(self):

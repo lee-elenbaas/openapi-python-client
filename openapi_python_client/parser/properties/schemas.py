@@ -209,6 +209,7 @@ def parameter_from_reference(
     *,
     param: Union[oai.Reference, Parameter],
     parameters: Parameters,
+    schemas: Schemas,
 ) -> Union[Parameter, ParameterError]:
     """
     Returns a Parameter from a Reference or the Parameter itself if one was provided.
@@ -224,7 +225,7 @@ def parameter_from_reference(
         - https://swagger.io/docs/specification/using-ref/
     """
     param = _resolve_reference(param, parameters)
-    param.param_schema = _resolve_reference(param.param_schema, Schemas)
+    param.param_schema = _resolve_reference(param.param_schema, schemas)
 
     return param
 
