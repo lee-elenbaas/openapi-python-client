@@ -9,8 +9,7 @@ from .. import Config
 from .. import schema as oai
 from ..utils import PythonIdentifier
 from .errors import ParseError, PropertyError
-from .properties import ResponseType, AnyProperty, Property, Schemas, property_from_data
-
+from .properties import ResponseType, AnyProperty, Property, Schemas, property_from_data, parse_reference_path
 
 @attr.s(auto_attribs=True, frozen=True)
 class Response:
