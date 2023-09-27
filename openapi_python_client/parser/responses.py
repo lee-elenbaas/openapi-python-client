@@ -70,12 +70,12 @@ def response_from_data(
     if isinstance(data, oai.Reference):
         ref_path = parse_reference_path(data.ref)
         if isinstance(ref_path, ParseError):
-            return PropertyError(detail=ref_path.detail, data=data)
+            return PropertyError(detail=ref_path.detail, data=data), schemas
         ref_model = schemas.classes_by_reference.get(ref_path)
         if ref_model is None:
-            return PropertyError(f"Reference {data.ref} not found")
+            return PropertyError(f"Reference {data.ref} not found"), schemas
         if not isinstance(ref_model, ModelProperty):
-            return PropertyError(f"Cannot take response from a non-model reference {data.ref}")
+            return PropertyError(f"Cannot take response from a non-model reference {data.ref}"), schemas
         data = ref_model.data
 
     content = data.content
